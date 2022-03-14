@@ -1,0 +1,7 @@
+{
+  "require": {
+    "php": "^7.0",
+    "doctrine/orm": "^2.5",
+    "twig/twig": "^2.4"
+  }
+}
