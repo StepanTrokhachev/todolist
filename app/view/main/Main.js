@@ -86,6 +86,7 @@ Ext.define('ToDo.view.main.Main', {
         }
     },
 
+
     items: [{
 
         title: 'Task',
