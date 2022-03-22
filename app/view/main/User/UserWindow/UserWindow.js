@@ -1,7 +1,7 @@
 Ext.define('ToDo.view.main.User.UserWindow.UserWindow', {
     extend: 'Ext.window.Window',
     xtype: 'window',
-
+    itemId: 'userWindow',
     layout: 'vbox',
     width: 500,
     height: 350,
@@ -20,10 +20,11 @@ Ext.define('ToDo.view.main.User.UserWindow.UserWindow', {
         {
             xtype: 'textfield',
             fieldLabel: 'User',
-            name: 'user',
+            name: 'name',
             width: "100%" ,
+            itemId: 'userName',
             bind:{
-                value:"{UserWindow.user}" ,
+                value:"{UserWindow.name}" ,
             }
 
 
@@ -36,7 +37,7 @@ Ext.define('ToDo.view.main.User.UserWindow.UserWindow', {
             scale: 'large',
             style: 'background-color: grey;',
             border:0,
-            handler: 'clickCraeteLine',
+            handler: 'ClickCreateUser',
             bind: {
                 text: "{action}"
             }

@@ -19,6 +19,16 @@ Ext.define('ToDo.view.main.User.User', {
             handler: 'clickCraete',
         },
         {
+
+            xtype: 'button',
+            text: 'Create PDF',
+            scale: 'large',
+            style: 'background-color: grey;',
+            border: 0,
+            handler: '',
+            margin: '5 0 5 0'
+        },
+        {
             xtype: 'userGrid',
 
         }
