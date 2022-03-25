@@ -6,9 +6,7 @@ Ext.define('ToDo.view.main.Task.TaskController', {
             viewModel: {
                 data: {
                     action: 'Create',
-                    TaskWindow: {
-                        id: null
-                    }
+                    TaskWindow: {}
                 }
             }
         }).show()

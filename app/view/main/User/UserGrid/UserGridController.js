@@ -13,7 +13,6 @@ Ext.define('ToDo.view.main.User.UserGrid.UserGridController', {
                 }
             }
         }).show()
-
     },
 
 
@@ -26,7 +25,6 @@ Ext.define('ToDo.view.main.User.UserGrid.UserGridController', {
                 }
             }
         }).show()
-
     },
 
 });

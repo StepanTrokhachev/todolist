@@ -3,14 +3,13 @@ Ext.define('ToDo.view.main.Task.Task', {
     xtype: 'task',
 
     layout: 'vbox',
-    width: "100%" ,
+    width: "100%",
     requires: [
         'ToDo.view.main.Task.TaskController'
     ],
-    controller:'task',
+    controller: 'task',
     items: [
         {
-
             xtype: 'button',
             text: 'Create',
             scale: 'large',
@@ -19,7 +18,6 @@ Ext.define('ToDo.view.main.Task.Task', {
             handler: 'clickCraete',
         },
         {
-
             xtype: 'button',
             text: 'Create PDF',
             scale: 'large',
@@ -31,7 +29,6 @@ Ext.define('ToDo.view.main.Task.Task', {
 
         {
             xtype: 'taskGrid',
-
         }
     ]
 });

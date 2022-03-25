@@ -3,8 +3,9 @@
 namespace service;
 
 use Doctrine\ORM\EntityManager;
-use dto\ClientDto;
+use dto\client\ClientDto;
 use entity\Client;
+use Symfony\Component\Config\Definition\Exception\Exception;
 
 class ClientService
 {
@@ -26,18 +27,34 @@ class ClientService
         return $dtos;
     }
 
+    public function checkNameUser($name)
+    {
+        if (empty($name)) {
+            throw new Exception("Вы не ввели имя");
+        }
+    }
+
     public function save(ClientDto $clientDto)
     {
-        if (empty($client)) {
-            $client = new Client();
-        } else {
-            $client = $this->entityManager->find(Client::class, $clientDto->id);
+        try {
+            $this->checkNameUser($clientDto->name);
+            if (empty($clientDto->id)) {
+                $client = new Client();
+            } else {
+                $client = $this->entityManager->find(Client::class, $clientDto->id);
+            }
+            $client->setClient($clientDto->name);
+            $this->entityManager->persist($client);
+            $this->entityManager->flush();
+        } catch (Exception $e) {
+            $exceptionText = $e->getMessage();
+            echo json_encode(['errMsg' => $exceptionText]);
+            throw new Exception();
         }
-        $client->setClient($clientDto->name);
-        $this->entityManager->persist($client);
-        $this->entityManager->flush();
     }
-    public function delete(int $id){
+
+    public function delete(int $id)
+    {
         $client = $this->entityManager->getRepository(Client::class)->findOneBy([
             'id' => $id,
         ]);
@@ -45,4 +62,5 @@ class ClientService
         $this->entityManager->remove($client);
         $this->entityManager->flush();
     }
+
 }

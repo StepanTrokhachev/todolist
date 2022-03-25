@@ -1,6 +1,6 @@
 Ext.define('ToDo.store.TaskWindowStore', {
     extend: 'Ext.data.Store',
-    fields:[ 'id', 'name', 'user','date','deadline',''],
+    model: 'ToDo.model.ModelGrid',
     alias: 'store.TaskWindowStore',
     proxy: {
         type: 'ajax',
@@ -10,5 +10,4 @@ Ext.define('ToDo.store.TaskWindowStore', {
         }
     },
     autoLoad: true
-
 });

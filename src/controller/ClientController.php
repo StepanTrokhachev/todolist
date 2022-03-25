@@ -1,35 +1,35 @@
 <?php
 
 namespace controller;
-use dto\ClientDto;
-use dto\TaskDto;
-use entity\Client;
+
+use dto\client\ClientDto;
 use service\ClientService;
 
 require_once(__DIR__ . '/../../config.php');
+
 class ClientController
 {
     private $clientService;
 
-    public function __construct(ClientService $clientService){
+    public function __construct(ClientService $clientService)
+    {
         $this->clientService = $clientService;
     }
-
 
     public function save($request)
     {
         $clientDto = $this->toIdNameDto($request);
         $this->clientService->save($clientDto);
-
     }
 
-    private function toIdNameDto ($incomingData)
+    private function toIdNameDto($incomingData)
     {
         $dto = new ClientDto();
         $dto->id = $incomingData['id'];
         $dto->name = $incomingData['name'];
         return $dto;
     }
+
     public function getClient()
     {
         return ($this->clientService->get());
@@ -37,6 +37,9 @@ class ClientController
 
     public function deleteUser()
     {
-      $this->clientService->delete($_REQUEST['id']);
+        if ($_REQUEST['id'] !== 'null') {
+            $idUser = $_REQUEST['id'];
+            $this->clientService->delete($idUser);
+        }
     }
 }

@@ -1,6 +1,8 @@
 <?php
 
-namespace dto;
+namespace dto\task;
+
+use dto\AbstractDto;
 
 class TaskDto extends AbstractDto
 {
@@ -8,8 +10,7 @@ class TaskDto extends AbstractDto
 
     public $name;
 
-    public $dateofcreate;
+    public $dateOfCreate;
 
     public $deadline;
-
 }

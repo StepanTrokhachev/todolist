@@ -1,6 +1,6 @@
 Ext.define('ToDo.store.UserWindowStore', {
     extend: 'Ext.data.Store',
-    fields:[ 'id', 'name',],
+    model: 'ToDo.model.IdName',
     alias: 'store.ToDo.store.UserWindowStore',
     proxy: {
         type: 'ajax',
@@ -10,5 +10,4 @@ Ext.define('ToDo.store.UserWindowStore', {
         }
     },
     autoLoad: true
-
 });

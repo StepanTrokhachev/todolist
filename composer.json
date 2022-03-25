@@ -2,7 +2,7 @@
   "require": {
     "php": "^7.0",
     "doctrine/orm": "^2.5",
-    "twig/twig": "^2.4",
+    "twig/twig": "2.4.0",
     "symfony/orm-pack": "^2.2",
     "symfony/polyfill-mbstring": "~1.0"
   },

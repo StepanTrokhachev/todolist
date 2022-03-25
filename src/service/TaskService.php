@@ -3,10 +3,10 @@
 namespace service;
 
 use Doctrine\ORM\EntityManager;
-use dto\TaskDto;
-use dto\TaskWithClientsDto;
+use dto\task\TaskWithClientsDto;
 use entity\Client;
 use entity\Task;
+use Symfony\Component\Config\Definition\Exception\Exception;
 
 class TaskService
 {
@@ -15,7 +15,6 @@ class TaskService
     public function __construct(EntityManager $entityManager)
     {
         $this->entityManager = $entityManager;
-
     }
 
     public function get()
@@ -29,26 +28,48 @@ class TaskService
         return $dtos;
     }
 
+    public function checkDate($dateCreate,$deadline)
+    {
+        if (new \DateTime($dateCreate)<new \DateTime($deadline)) {
+            throw new Exception("Неправильно указаны даты");
+        }
+    }
 
     public function save(TaskWithClientsDto $taskWithClientsDto)
     {
-        if (empty($task)) {
-            $task = new Task();
-        } else {
-            $task = $this->entityManager->find(Task::class, $taskWithClientsDto->id);
-        }
-        $task->setName($taskWithClientsDto->name);
-        $task->setDateOfCreate(new \DateTime($taskWithClientsDto->dateofcreate));
-        $task->setDeadline(new \DateTime($taskWithClientsDto->deadline));
-        $this->entityManager->persist($task);
+        try {
+            $this->checkDate($taskWithClientsDto->deadline,$taskWithClientsDto->dateOfCreate);
 
-        foreach ($taskWithClientsDto->clients as $clientId) {
+            if (empty($taskWithClientsDto->id)) {
+                $task = new Task();
+            } else {
+                $task = $this->entityManager->getRepository(Task::class)->find($taskWithClientsDto->id);
+            }
+            $task->setName($taskWithClientsDto->name);
+            $task->setDateOfCreate(new \DateTime($taskWithClientsDto->dateOfCreate));
+            $task->setDeadline(new \DateTime($taskWithClientsDto->deadline));
+
             /** @var Client $client */
-            $client = $this->entityManager->getRepository(Client::class)->find($clientId);
-            $task->addUser($client);
-            $client->addTask($task);
+            foreach ($task->getUsers()->getValues() as $client) {
+                if (!in_array($client->getId(), $taskWithClientsDto->clients)) {
+                    $task->removeClient($client);
+                    $client->removeTask($task);
+                }
+            }
+
+            foreach ($taskWithClientsDto->clients as $clientId) {
+                /** @var Client $client */
+                $client = $this->entityManager->getRepository(Client::class)->find($clientId);
+                $task->addClient($client);
+                $client->addTask($task);
+            }
+            $this->entityManager->persist($task);
+            $this->entityManager->flush();
+        } catch (Exception $e){
+            $exceptionText = $e->getMessage();
+            echo json_encode(['errMsg' => $exceptionText]);
+            throw new \Exception();
         }
-        $this->entityManager->flush();
     }
 
     public function delete(int $id)
@@ -60,4 +81,11 @@ class TaskService
         $this->entityManager->remove($task);
         $this->entityManager->flush();
     }
+
+
+
+
+
+
+
 }

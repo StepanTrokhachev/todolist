@@ -8,9 +8,7 @@ Ext.define('ToDo.view.main.MainModel', {
 
     data: {
         name: 'ToDo',
-
         loremIpsum: 'Инфа о пользователе'
     }
 
-    //TODO - add data, formulas and/or methods to support your view
 });

@@ -5,11 +5,13 @@ Ext.define('ToDo.view.main.Task.TaskGrid.TaskGrid', {
     layout: 'column',
     width: "100%",
     requires: [
-        'ToDo.view.main.Task.TaskGrid.TaskGridController'
+        'ToDo.view.main.Task.TaskGrid.TaskGridController',
+        'ToDo.store.TaskWindowStore'
     ],
     store: {
         type: 'TaskWindowStore'
     },
+
     controller: 'taskgrid',
     columns: [
         {
@@ -33,20 +35,18 @@ Ext.define('ToDo.view.main.Task.TaskGrid.TaskGrid', {
                         str += str === '' ? item.name : ', ' + item.name
                     });
                 }
-
                 return str;
             }
         },
         {
             text: 'Date of Create',
-            dataIndex: 'dateofcreate',
+            dataIndex: 'dateOfCreate',
             flex: 1,
         },
         {
             text: 'Deadline',
             dataIndex: 'deadline',
             flex: 1,
-
         },
         {
             align: 'center',
@@ -63,7 +63,6 @@ Ext.define('ToDo.view.main.Task.TaskGrid.TaskGrid', {
         }],
     listeners: {
         celldblclick: "onClickChange",
-
     }
 
 });

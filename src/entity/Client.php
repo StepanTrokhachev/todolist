@@ -1,34 +1,20 @@
 <?php
-namespace  entity;
+
+namespace entity;
+
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\ManyToMany;
 use Doctrine\ORM\Mapping\JoinTable;
 use dto\AbstractDto;
-use dto\ClientDto;
+use dto\client\ClientDto;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
-
 
 
 /** @Entity */
 class Client
 {
-//    /**
-//     * Many Users have Many Groups.
-//     * @ManyToMany(targetEntity="Task", inversedBy="client")
-//     * @JoinTable(name="clients_tasks")
-//     */
-//    private $task;
-    /**
-     * @ORM\ManyToMany(targetEntity="entity\Task", inversedBy="users")
-     * @ORM\JoinTable(name="clients_tasks",
-     *              joinColumns={@ORM\JoinColumn(name="client_id", referencedColumnName="id")},
-     *              inverseJoinColumns={@ORM\JoinColumn(name="task_id", referencedColumnName="id")}
-     * )
-     */
-    private $task;
-
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -40,6 +26,15 @@ class Client
      * @ORM\Column(type="string")
      */
     private $client;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="entity\Task", inversedBy="users")
+     * @ORM\JoinTable(name="clients_tasks",
+     *              joinColumns={@ORM\JoinColumn(name="client_id", referencedColumnName="id")},
+     *              inverseJoinColumns={@ORM\JoinColumn(name="task_id", referencedColumnName="id")}
+     * )
+     */
+    private $task;
 
     public function __construct()
     {
@@ -54,15 +49,14 @@ class Client
         return $this->task;
     }
 
-    public function addTask(Task $task)
-    {
-        $this->task->add($task);
-        return $this;
-    }
-
     public function setId($id)
     {
         $this->id = $id;
+    }
+
+    public function getId()
+    {
+        return $this->id;
     }
 
     public function setClient($client)
@@ -71,14 +65,25 @@ class Client
         return $this;
     }
 
-    public function getId()
-    {
-        return $this->id;
-    }
-
     public function getClient()
     {
         return $this->client;
+    }
+
+    public function addTask(Task $task)
+    {
+        if (!$this->task->contains($task)) {
+            $this->task->add($task);
+            return $this;
+        }
+    }
+
+    public function removeTask(Task $task)
+    {
+        if ($this->task->contains($task)) {
+            $this->task->removeElement($task);
+            return $this;
+        }
     }
 
     public function toDto(): AbstractDto
@@ -88,6 +93,5 @@ class Client
         $toDtoUser->name = $this->getClient();
         return $toDtoUser;
     }
-
 
 }

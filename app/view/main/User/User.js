@@ -3,23 +3,21 @@ Ext.define('ToDo.view.main.User.User', {
     xtype: 'user',
 
     layout: 'vbox',
-    width: "100%" ,
+    width: "100%",
     requires: [
         'ToDo.view.main.User.UserController'
     ],
-    controller:'user',
+    controller: 'user',
     items: [
         {
-
             xtype: 'button',
             text: 'Create',
             scale: 'large',
             style: 'background-color: grey;',
-            border:0,
+            border: 0,
             handler: 'clickCraete',
         },
         {
-
             xtype: 'button',
             text: 'Create PDF',
             scale: 'large',
@@ -30,7 +28,6 @@ Ext.define('ToDo.view.main.User.User', {
         },
         {
             xtype: 'userGrid',
-
         }
     ]
 });

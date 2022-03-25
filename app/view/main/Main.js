@@ -2,15 +2,13 @@ Ext.define('ToDo.view.main.Main', {
     extend: 'Ext.tab.Panel',
     xtype: 'app-main',
 
-
     requires: [
         'Ext.plugin.Viewport',
         'Ext.window.MessageBox',
-
         'ToDo.view.main.MainController',
         'ToDo.view.main.MainModel',
         'ToDo.view.main.Task.Task',
-        'ToDo.view.main.User.User' ,
+        'ToDo.view.main.User.User',
     ],
 
     controller: 'main',
@@ -24,7 +22,7 @@ Ext.define('ToDo.view.main.Main', {
 
     header: {
         style: 'background-color: grey;',
-        border:0,
+        border: 0,
         layout: {
             align: 'stretchmax'
         },
@@ -40,7 +38,7 @@ Ext.define('ToDo.view.main.Main', {
     tabBar: {
         flex: 1,
         style: 'background-color: grey;',
-        border:0,
+        border: 0,
         layout: {
             align: 'stretch',
             overflowHandler: 'none'
@@ -48,9 +46,7 @@ Ext.define('ToDo.view.main.Main', {
     },
 
     responsiveConfig: {
-
         tall: {
-
             headerPosition: 'top'
         },
         wide: {
@@ -60,12 +56,9 @@ Ext.define('ToDo.view.main.Main', {
 
     defaults: {
         bodyPadding: 20,
-
-
         tabConfig: {
             plugins: 'responsive',
             responsiveConfig: {
-
                 wide: {
                     iconAlign: 'left',
                     textAlign: 'left'
@@ -79,13 +72,9 @@ Ext.define('ToDo.view.main.Main', {
         }
     },
 
-
-
     items: [{
-
         title: 'Task',
         glyph: "!",
-        // The following grid shares a store with the classic version's grid as well!
         items: [{
             xtype: 'task'
         }]

@@ -1,6 +1,6 @@
 <?php
 
-namespace dto;
+namespace dto\task;
 
 class TaskWithClientsDto extends TaskDto
 {

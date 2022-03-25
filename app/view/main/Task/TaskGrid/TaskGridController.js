@@ -19,7 +19,6 @@ Ext.define('ToDo.view.main.Task.TaskGrid.TaskGridController', {
                 }
             }
         }).show()
-
     },
 
     onClickDeleteTask: function (grid, rowIndex, colIndex) {
@@ -31,7 +30,6 @@ Ext.define('ToDo.view.main.Task.TaskGrid.TaskGridController', {
                 }
             }
         }).show()
-
     },
 
 });

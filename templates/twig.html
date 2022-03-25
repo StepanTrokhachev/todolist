@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+</head>
+<body>
+<p>Таблица</p>
+<table border="1">
+    {% for task in tasks %}
+    <tr>
+        <th>{{ task.name }} </th>
+        <th>{{ task.date_of_create }} </th>
+        <th>{{ task.deadline }} </th>
+    </tr>
+    {% endfor %}
+</table>
+</body>
+</html>

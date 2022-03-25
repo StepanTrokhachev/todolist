@@ -1,5 +1,7 @@
 <?php
-namespace  entity;
+
+namespace entity;
+
 use Cassandra\Date;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Entity;
@@ -8,24 +10,12 @@ use Doctrine\ORM\Mapping\JoinTable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use dto\AbstractDto;
-use dto\TaskDto;
-use dto\TaskWithClientsDto;
+use dto\task\TaskDto;
+use dto\task\TaskWithClientsDto;
 
-/** @Entity
- */
+/** @Entity */
 class Task
 {
-
-//    /**
-//     * @ManyToMany(targetEntity="Client", mappedBy="tasks")
-//     */
-//    private $users;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="entity\Client", mappedBy="task")
-     */
-    private $users;
-
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -37,33 +27,30 @@ class Task
      * @ORM\Column(type="string")
      */
     private $name;
+
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(name="date_of_create", type="datetime")
      */
-    private $dateofcreate;
+    private $dateOfCreate;
+
     /**
      * @ORM\Column(type="datetime")
      */
     private $deadline;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="entity\Client", mappedBy="task")
+     */
+    private $users;
+
+    public function __construct()
+    {
+        $this->users = new ArrayCollection();
+    }
+
     public function setId($id)
     {
         $this->id = $id;
-    }
-
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
-
-    public function setDateOfCreate($dateofcreate)
-    {
-        $this->dateofcreate = $dateofcreate;
-    }
-
-    public function setDeadline($deadline)
-    {
-        $this->deadline = $deadline;
     }
 
     public function getId()
@@ -71,32 +58,34 @@ class Task
         return $this->id;
     }
 
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
 
     public function getName()
     {
         return $this->name;
     }
 
+    public function setDateOfCreate($dateOfCreate)
+    {
+        $this->dateOfCreate = $dateOfCreate;
+    }
+
     public function getDateOfCreate(): \DateTime
     {
-        return $this->dateofcreate;
+        return $this->dateOfCreate;
+    }
+
+    public function setDeadline($deadline)
+    {
+        $this->deadline = $deadline;
     }
 
     public function getDeadline(): \DateTime
     {
         return $this->deadline;
-    }
-
-    public function __construct() {
-        $this->users = new ArrayCollection();
-    }
-
-    /**
-     * @return Collection
-     */
-    public function getUsers(): Collection
-    {
-        return $this->users;
     }
 
     /**
@@ -107,10 +96,28 @@ class Task
         $this->users = $users;
     }
 
-    public function addUser(Client $client)
+    /**
+     * @return Collection
+     */
+    public function getUsers(): Collection
     {
-        $this->users->add($client);
-        return $this;
+        return $this->users;
+    }
+
+    public function addClient(Client $client)
+    {
+        if (!$this->users->contains($client)) {
+            $this->users->add($client);
+            return $this;
+        }
+    }
+
+    public function removeClient(Client $client)
+    {
+        if ($this->users->contains($client)) {
+            $this->users->removeElement($client);
+            return $this;
+        }
     }
 
     public function toDto(): AbstractDto
@@ -118,22 +125,20 @@ class Task
         $toDtoUser = new TaskDto();
         $toDtoUser->id = $this->getId();
         $toDtoUser->name = $this->getName();
-        $toDtoUser->dateofcreate = $this->getDateOfCreate()->format('d.m.Y');
+        $toDtoUser->dateOfCreate = $this->getDateOfCreate()->format('d.m.Y');
         $toDtoUser->deadline = $this->getDeadline()->format('d.m.Y');
-
         return $toDtoUser;
-
     }
 
-    public function toDtoWithClients (){
-        /** @var TaskWithClientsDto  $taskWithClientsDto  */
+    public function toDtoWithClients()
+    {
+        /** @var TaskWithClientsDto $taskWithClientsDto */
         $taskWithClientsDto = $this->toDto();
         /** @var Client $client */
-        foreach ($this->getUsers()->getValues() as  $client){
-            $taskWithClientsDto->clients[]=$client->toDto();
+        foreach ($this->getUsers()->getValues() as $client) {
+            $taskWithClientsDto->clients[] = $client->toDto();
         }
         return $taskWithClientsDto;
     }
-
 
 }

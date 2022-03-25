@@ -22,7 +22,6 @@ function GetEntityManager()
     $config = Setup::createAnnotationMetadataConfiguration(array(__DIR__."/src/entity"), $isDevMode, $proxyDir, $cache, $useSimpleAnnotationReader);
     $config = Setup::createConfiguration(true, __DIR__ . '/var/cache', new ArrayCache());
     $driver = new AnnotationDriver(new AnnotationReader(), [__DIR__ . '/src/entity']);
-
     $connectionParams = array(
         'dbname' => 'postgresbase',
         'user' => 'postgres',
@@ -39,7 +38,7 @@ function GetEntityManager()
 
 //$entityManager = GetEntityManager();
 //
-//$sql = "SELECT * FROM client";
+//$sql = "SELECT * FROM task";
 //
 //$result = $entityManager->getConnection()->executeQuery($sql)->fetchAll(PDO::FETCH_ASSOC);
 //

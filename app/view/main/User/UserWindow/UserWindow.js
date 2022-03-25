@@ -10,48 +10,42 @@ Ext.define('ToDo.view.main.User.UserWindow.UserWindow', {
         'ToDo.view.main.User.UserWindow.UserWindowController',
         'ToDo.view.main.User.UserWindow.UserWindowModel'
     ],
-    bind:{
+    bind: {
         title: '{action}' + ' User',
     },
-    controller:'userWindow',
-    viewModel:"viewUserWindow",
-    closable:false,
+    controller: 'userWindow',
+    viewModel: "viewUserWindow",
+    closable: false,
     items: [
         {
             xtype: 'textfield',
             fieldLabel: 'User',
             name: 'name',
-            width: "100%" ,
+            width: "100%",
             itemId: 'userName',
-            bind:{
-                value:"{UserWindow.name}" ,
+            bind: {
+                value: "{UserWindow.name}",
             }
-
-
         },
-
     ],
     buttons:
         [
-        {
-            scale: 'large',
-            style: 'background-color: grey;',
-            border:0,
-            handler: 'ClickCreateUser',
-            bind: {
-                text: "{action}"
+            {
+                scale: 'large',
+                style: 'background-color: grey;',
+                border: 0,
+                handler: 'clickCreateUser',
+                bind: {
+                    text: "{action}"
+                }
+            },
+            {
+                text: 'Close',
+                scale: 'large',
+                style: 'background-color: grey;',
+                border: 0,
+                handler: 'clickClose'
             }
-
-        },
-        {
-            text: 'Close',
-            scale: 'large',
-            style: 'background-color: grey;',
-            border:0,
-            handler: 'clickClose'
-
-        }
-
-    ],
+        ],
 
 });

@@ -1,6 +1,8 @@
 <?php
 
-namespace dto;
+namespace dto\client;
+
+use dto\AbstractDto;
 
 class ClientDto extends AbstractDto
 {
