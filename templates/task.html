@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+</head>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 2px solid #000000;
+        }
+
+        th, tr {
+            border-collapse: collapse;
+            border: 1px solid #4d4d4d;
+        }
+    </style>
+<body>
+    <h1 align="center">Отчет по задачам</h1>
+    <table>
+        <thead>
+            <tr>
+                <th width="25%">Индивидуальный <br> номер</th>
+                <th>Задача</th>
+                <th>Дата создания задачи</th>
+                <th>Дата сдачи</th>
+                <th>Пользователи</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for task in tasks %}
+            <tr>
+                <th>{{ task.id }}</th>
+                <th>{{ task.name }}</th>
+                <th>{{ task.dateOfCreate }}</th>
+                <th>{{ task.deadline }}</th>
+                <th>
+                    {% for client in task.clients %}
+                    {{ client.name}}
+                    <br>
+                    {% endfor %}
+                </th>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

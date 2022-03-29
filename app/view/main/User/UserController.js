@@ -13,6 +13,10 @@ Ext.define('ToDo.view.main.User.UserController', {
                 }
             }
         }).show()
+    },
+
+    createPdf: function () {
+        window.open('http://localhost:63342/PROJECTPHP/newdir/ToDoList/src/api.php?act=Client&method=createPdf')
     }
 });
 

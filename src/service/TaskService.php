@@ -7,6 +7,8 @@ use dto\task\TaskWithClientsDto;
 use entity\Client;
 use entity\Task;
 use Symfony\Component\Config\Definition\Exception\Exception;
+use Twig_Environment;
+
 
 class TaskService
 {
@@ -28,18 +30,20 @@ class TaskService
         return $dtos;
     }
 
-    public function checkDate($dateCreate,$deadline)
+    public function checkCorrect($dateCreate, $deadline, $name)
     {
-        if (new \DateTime($dateCreate)<new \DateTime($deadline)) {
+        if (new \DateTime($dateCreate) < new \DateTime($deadline)) {
             throw new Exception("Неправильно указаны даты");
+        }
+        if (empty($name)) {
+            throw new Exception("Не ввели название задачи");
         }
     }
 
     public function save(TaskWithClientsDto $taskWithClientsDto)
     {
         try {
-            $this->checkDate($taskWithClientsDto->deadline,$taskWithClientsDto->dateOfCreate);
-
+            $this->checkCorrect($taskWithClientsDto->deadline, $taskWithClientsDto->dateOfCreate, $taskWithClientsDto->name);
             if (empty($taskWithClientsDto->id)) {
                 $task = new Task();
             } else {
@@ -65,7 +69,7 @@ class TaskService
             }
             $this->entityManager->persist($task);
             $this->entityManager->flush();
-        } catch (Exception $e){
+        } catch (Exception $e) {
             $exceptionText = $e->getMessage();
             echo json_encode(['errMsg' => $exceptionText]);
             throw new \Exception();
@@ -82,10 +86,26 @@ class TaskService
         $this->entityManager->flush();
     }
 
-
-
-
-
-
+    public function Pdf()
+    {
+        $loader = new \Twig\Loader\FilesystemLoader('../templates');
+        $twig = new Twig_Environment($loader);
+        $template = $twig->loadTemplate('task.html');
+        $entityManager = GetEntityManager();
+        /** @var Task[] $tasks */
+        $tasks = $entityManager->getRepository(Task::class)->findAll();
+        $result = [];
+        foreach ($tasks as $task) {
+            $result[] = $task->toDtoWithClients();
+        }
+        sort($result);
+        $title = 'Отчет по задачам';
+        $mpdf = new \Mpdf\Mpdf();
+        $mpdf->WriteHTML($template->render(array(
+            'title' => $title,
+            'tasks' => $result
+        )));
+        $mpdf->Output();
+    }
 
 }

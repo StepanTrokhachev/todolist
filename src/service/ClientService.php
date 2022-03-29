@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManager;
 use dto\client\ClientDto;
 use entity\Client;
 use Symfony\Component\Config\Definition\Exception\Exception;
+use Twig_Environment;
 
 class ClientService
 {
@@ -61,6 +62,28 @@ class ClientService
         $this->entityManager->persist($client);
         $this->entityManager->remove($client);
         $this->entityManager->flush();
+    }
+
+    public function Pdf()
+    {
+        $loader = new \Twig\Loader\FilesystemLoader('../templates');
+        $twig = new Twig_Environment($loader);
+        $template = $twig->loadTemplate('client.html');
+        $entityManager = GetEntityManager();
+        /** @var Client[] $clients */
+        $clients = $entityManager->getRepository(Client::class)->findAll();
+        $result = [];
+        foreach ($clients as $client) {
+            $result[] = $client->toDto();
+        }
+        sort($result);
+        $title = 'Отчет по пользователям';
+        $mpdf = new \Mpdf\Mpdf();
+        $mpdf->WriteHTML($template->render(array(
+            'title' => $title,
+            'clients' => $result
+        )));
+        $mpdf->Output();
     }
 
 }

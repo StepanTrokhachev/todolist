@@ -37,9 +37,14 @@ class ClientController
 
     public function deleteUser()
     {
-        if ($_REQUEST['id'] !== 'null') {
+        if (!empty($_REQUEST['id'])) {
             $idUser = $_REQUEST['id'];
             $this->clientService->delete($idUser);
         }
+    }
+
+    public function createPdf()
+    {
+        $this->clientService->Pdf();
     }
 }

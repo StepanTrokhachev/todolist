@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+</head>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 2px solid #000000;
+        }
+
+        th, tr {
+            border-collapse: collapse;
+            border: 1px solid #4d4d4d;
+        }
+    </style>
+<body>
+    <h1 align="center" >Отчет по пользователям</h1>
+    <table>
+        <thead>
+            <tr>
+                <th width="25%">Индивидуальный <br> номер</th>
+                <th>Имя пользователя</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for client in clients %}
+            <tr>
+                <th>{{ client.id }}</th>
+                <th>{{ client.name }}</th>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

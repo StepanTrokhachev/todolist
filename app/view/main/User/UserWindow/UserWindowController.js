@@ -8,23 +8,22 @@ Ext.define('ToDo.view.main.User.UserWindow.UserWindowController', {
     },
 
     clickCreateUser: function (button) {
-        let me = this;
-        const createNewRequest = this.getView();
-        this.mask(createNewRequest);
+        let me = this
+        const newRequest = this.getView();
+        this.mask(newRequest);
         let gridUsersStore = Ext.ComponentQuery.query('#UserGrid')[0].getStore();
         Ext.Ajax.request({
             url: 'http://localhost:63342/PROJECTPHP/newdir/ToDoList/src/api.php?act=Client&method=save',
             method: 'POST',
             jsonData: JSON.stringify(this.getViewModel().data.UserWindow),
             success: function () {
-                me.unmask(createNewRequest);
+                me.unmask(newRequest);
                 gridUsersStore.reload()
                 button.up("window").close()
             },
             failure: function (erorr) {
-                debugger
                 Ext.Msg.alert(JSON.parse(erorr.responseText)['errMsg']);
-                me.unmask(createNewRequest);
+                me.unmask(newRequest);
             },
         })
     }

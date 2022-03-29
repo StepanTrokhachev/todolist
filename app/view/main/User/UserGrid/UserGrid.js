@@ -42,7 +42,6 @@ Ext.define('ToDo.view.main.User.UserGrid.UserGrid', {
 
     listeners: {
         celldblclick: "onClickChange",
-
     }
 
 });

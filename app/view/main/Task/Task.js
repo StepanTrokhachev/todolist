@@ -16,6 +16,9 @@ Ext.define('ToDo.view.main.Task.Task', {
             style: 'background-color: grey;',
             border: 0,
             handler: 'clickCraete',
+            bind: {
+                disabled: '{disabledButton}'
+            } // допишу....
         },
         {
             xtype: 'button',
@@ -23,7 +26,7 @@ Ext.define('ToDo.view.main.Task.Task', {
             scale: 'large',
             style: 'background-color: grey;',
             border: 0,
-            handler: '',
+            handler: 'createPdf',
             margin: '5 0 5 0'
         },
 

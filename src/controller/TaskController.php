@@ -46,4 +46,9 @@ class TaskController
         }
     }
 
+    public function createPdf()
+    {
+        $this->taskService->Pdf();
+    }
+
 }

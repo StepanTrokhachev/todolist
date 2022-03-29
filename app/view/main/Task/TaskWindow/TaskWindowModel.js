@@ -3,5 +3,6 @@ Ext.define('ToDo.view.main.Task.TaskWindow.TaskWindowModel', {
 
     alias: 'viewmodel.viewTaskWindow',
 
-    data: {}
+    data: {},
+
 });

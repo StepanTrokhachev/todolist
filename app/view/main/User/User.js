@@ -23,7 +23,7 @@ Ext.define('ToDo.view.main.User.User', {
             scale: 'large',
             style: 'background-color: grey;',
             border: 0,
-            handler: '',
+            handler: 'createPdf',
             margin: '5 0 5 0'
         },
         {

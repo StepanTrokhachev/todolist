@@ -66,6 +66,7 @@ Ext.define('ToDo.view.main.Task.TaskWindow.TaskWindow', {
             }
         },
     ],
+
     buttons:
         [
             {
