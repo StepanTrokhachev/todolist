@@ -1838,7 +1838,7 @@ Ext.Microloader = Ext.Microloader || (function () {
     }
 
     var _cache = window['applicationCache'],
-        // Local Storage Controller
+        // Local Storage controller
         LocalStorage = {
             clearAllPrivate: function(manifest) {
                 if(_storage) {

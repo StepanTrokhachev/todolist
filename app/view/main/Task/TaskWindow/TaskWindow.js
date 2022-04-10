@@ -1,87 +1,89 @@
 Ext.define('ToDo.view.main.Task.TaskWindow.TaskWindow', {
     extend: 'Ext.window.Window',
     xtype: 'window',
-
+    itemId: 'TaskWindow',
     layout: 'vbox',
     width: 500,
     height: 350,
     bodyPadding: 10,
     requires: [
         'ToDo.view.main.Task.TaskWindow.TaskWindowController',
-        'ToDo.view.main.Task.TaskWindow.TaskWindowModel'
+        'ToDo.view.main.Task.TaskWindow.TaskWindowModel',
     ],
-    bind:{
+    bind: {
         title: '{action}' + ' User',
     },
-    controller:'taskWindow',
-    viewModel:"viewTaskWindow",
-    closable:false,
+
+    controller: 'taskWindow',
+    viewModel: "viewTaskWindow",
+    closable: false,
     items: [
         {
             xtype: 'textfield',
             fieldLabel: 'Name',
             name: 'name',
-            width: "100%" ,
-            bind:{
-                value:"{TaskWindow.name}" ,
+            itemId: 'name',
+            width: "100%",
+            bind: {
+                value: "{TaskWindow.name}",
             }
-
-
         },
         {
-            xtype: 'combobox',
+            xtype: 'combo',
             fieldLabel: 'Assigned Users',
+            multiSelect: true,
             name: 'user',
-            width: "100%" ,
-            bind:{
-                value:"{TaskWindow.user}" ,
-            }
+            width: "100%",
+            itemId: 'client',
+            store: 'ToDo.store.UserWindowStore',
+            valueField: 'id',
+            displayField: 'name',
+            queryMode: 'local',
+            bind: {
+                value: "{TaskWindow.userIds}",
+            },
         },
         {
             xtype: 'datefield',
             fieldLabel: 'Date of create',
-            name: 'date',
+            name: 'dateOfCreate',
+            width: "100%",
+            itemId: 'dateOfCreate',
             format: 'd.m.Y',
-            width: "100%" ,
-            bind:{
-                value:"{TaskWindow.date}" ,
-            }
+            bind: {
+                value: "{TaskWindow.dateOfCreate}",
+            },
         },
         {
             xtype: 'datefield',
             fieldLabel: 'DeadLine',
             name: 'deadline',
             format: 'd.m.Y',
-            width: "100%" ,
-            bind:{
-                value:"{TaskWindow.deadline}" ,
+            itemId: 'deadline',
+            width: "100%",
+            bind: {
+                value: "{TaskWindow.deadline}",
             }
-
         },
-
-
     ],
+
     buttons:
         [
-        {
-            scale: 'large',
-            style: 'background-color: grey;',
-            border:0,
-            handler: 'clickCraeteLine',
-            bind: {
-                text: "{action}"
+            {
+                scale: 'large',
+                style: 'background-color: grey;',
+                border: 0,
+                handler: 'ClickCreateTask',
+                bind: {
+                    text: "{action}"
+                }
+            },
+            {
+                text: 'Close',
+                scale: 'large',
+                style: 'background-color: grey;',
+                border: 0,
+                handler: 'clickClose'
             }
-
-        },
-        {
-            text: 'Close',
-            scale: 'large',
-            style: 'background-color: grey;',
-            border:0,
-            handler: 'clickClose'
-
-        }
-
-    ],
-
+        ],
 });

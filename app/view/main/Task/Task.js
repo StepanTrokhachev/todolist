@@ -3,24 +3,35 @@ Ext.define('ToDo.view.main.Task.Task', {
     xtype: 'task',
 
     layout: 'vbox',
-    width: "100%" ,
+    width: "100%",
     requires: [
         'ToDo.view.main.Task.TaskController'
     ],
-    controller:'task',
+    controller: 'task',
     items: [
         {
-
             xtype: 'button',
             text: 'Create',
             scale: 'large',
             style: 'background-color: grey;',
-            border:0,
+            border: 0,
             handler: 'clickCraete',
+            bind: {
+                disabled: '{disabledButton}'
+            } // допишу....
         },
         {
-            xtype: 'taskGrid',
+            xtype: 'button',
+            text: 'Create PDF',
+            scale: 'large',
+            style: 'background-color: grey;',
+            border: 0,
+            handler: 'createPdf',
+            margin: '5 0 5 0'
+        },
 
+        {
+            xtype: 'taskGrid',
         }
     ]
 });

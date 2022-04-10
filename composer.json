@@ -2,6 +2,20 @@
   "require": {
     "php": "^7.0",
     "doctrine/orm": "^2.5",
-    "twig/twig": "^2.4"
+    "twig/twig": "2.4.0",
+    "symfony/orm-pack": "^2.2",
+    "symfony/polyfill-mbstring": "~1.0",
+    "mpdf/mpdf": "8.0.4",
+    "ext-mbstring": "*",
+    "ext-gd": "*",
+    "myclabs/deep-copy": "^1.7",
+    "paragonie/random_compat": "^1.4",
+    "psr/log": "^1.0",
+    "setasign/fpdi": "^2.1"
+  },
+  "autoload": {
+    "psr-0": {
+      "": "src/"
+    }
   }
 }
