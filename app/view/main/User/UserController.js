@@ -7,8 +7,9 @@ Ext.define('ToDo.view.main.User.UserController', {
             viewModel: {
                 data: {
                     action: 'Create',
-                    UserWindow: {
-                        id: null
+                    userWindow: {
+                        id: null,
+                        name: null,
                     }
                 }
             }
