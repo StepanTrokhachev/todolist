@@ -1,6 +1,6 @@
 Ext.define('ToDo.view.main.User.UserWindow.UserWindow', {
     extend: 'Ext.window.Window',
-    xtype: 'window',
+    xtype: 'UserWindow',
     itemId: 'userWindow',
     layout: 'vbox',
     width: 500,
@@ -14,7 +14,7 @@ Ext.define('ToDo.view.main.User.UserWindow.UserWindow', {
         title: '{action}' + ' User',
     },
     controller: 'userWindow',
-    viewModel: "viewUserWindow",
+    viewModel: 'UserWindow',
     closable: false,
     items: [
         {
@@ -24,7 +24,13 @@ Ext.define('ToDo.view.main.User.UserWindow.UserWindow', {
             width: "100%",
             itemId: 'userName',
             bind: {
-                value: "{UserWindow.name}",
+                value: "{userWindow.name}",
+            },
+            listeners:{
+                change: function (w){
+                    debugger
+                    this.up('#userWindow').getViewModel().notify()
+                }
             }
         },
     ],
@@ -36,7 +42,8 @@ Ext.define('ToDo.view.main.User.UserWindow.UserWindow', {
                 border: 0,
                 handler: 'clickCreateUser',
                 bind: {
-                    text: "{action}"
+                    text: "{action}",
+                    disabled: "{isDisabledCreatePurchaseButton}"
                 }
             },
             {

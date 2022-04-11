@@ -12,6 +12,7 @@ Ext.define('ToDo.view.main.User.UserWindow.UserWindowController', {
         const newRequest = this.getView();
         this.mask(newRequest);
         let gridUsersStore = Ext.ComponentQuery.query('#UserGrid')[0].getStore();
+        debugger
         Ext.Ajax.request({
             url: 'http://localhost:63342/PROJECTPHP/newdir/ToDoList/src/api.php?act=Client&method=save',
             method: 'POST',
